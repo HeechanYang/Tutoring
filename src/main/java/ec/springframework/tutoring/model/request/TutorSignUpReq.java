@@ -8,9 +8,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TutorSignUpReq {
-    private int idx;
+    private String email;
+    private String passwd;
     private String name;
-    private String introduction;
+    private String phoneNum;
+    private int genderType;
     private int age;
-    private String profileImgAddr;
+    private int schoolIdx;
+    private String career;
+    private String intro;
 }

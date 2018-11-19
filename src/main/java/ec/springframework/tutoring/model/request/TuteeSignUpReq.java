@@ -8,10 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TuteeSignUpReq {
-    private int idx;
+    private String email;
+    private String passwd;
     private String name;
-    private String school;
-    private String introduction;
+    private String phoneNum;
+    private int genderType;
     private int age;
-    private String profileImgAddr;
+    private int schoolIdx;
+    private String intro;
 }

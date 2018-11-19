@@ -52,7 +52,7 @@ public class TutoringApplication extends SpringBootServletInitializer {
 
         Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mappers/*Mapper.xml");
         sessionFactory.setMapperLocations(res);
-
+        sessionFactory.getObject().getConfiguration().setMapUnderscoreToCamelCase(true);
         return sessionFactory.getObject();
     }
 
