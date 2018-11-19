@@ -10,8 +10,10 @@ import lombok.NoArgsConstructor;
 public class Tutee {
     private int idx;
     private String name;
+    private String phoneNum;
+    private String email;
+    private String intro;
     private String school;
-    private String introduction;
     private int age;
     private String profileImgAddr;
 }

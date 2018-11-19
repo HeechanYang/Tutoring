@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="ec.springframework.tutoring.mapper.TutorMapper">
+
+    <select id="getTuteeList" resultType="ec.springframework.tutoring.model.Tutee">
+        SELECT t.*, s.name FROM tutee t INNER JOIN school s ON t.school_idx = s.idx;
+    </select>
+
+    <select id="getMyTuteeList" resultType="ec.springframework.tutoring.model.Tutee">
+        SELECT t.*, s.name FROM matching m
+            INNER JOIN tutor tt ON m.tutor_idx = tt.idx
+            INNER JOIN tutee t ON m.tutee_idx = t.idx
+            INNER JOIN school s ON t.school_idx = s.idx WHERE m.tutor_idx = #{tutorIdx};
+    </select>
+
+</mapper>
