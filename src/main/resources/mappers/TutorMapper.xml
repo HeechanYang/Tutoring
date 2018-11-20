@@ -23,7 +23,7 @@
         SELECT * FROM school WHERE type = 1;
     </select>
 
-    <select id="signIn" resultType="ec.springframework.tutoring.model.Tutee">
+    <select id="signIn" resultType="ec.springframework.tutoring.model.Tutor">
         SELECT t.*, s.name AS school FROM tutor t INNER JOIN school s ON t.school_idx = s.idx
         WHERE email LIKE #{signInReq.email} AND passwd LIKE #{signInReq.passwd};
     </select>
@@ -45,32 +45,32 @@
         WHERE idx = #{tuteeIdx};
     </select>
 
-    <select id="getRandomMatchedTutee" resultType="ec.springframework.tutoring.model.Tutor">
+    <select id="getRandomMatchedTutee" resultType="ec.springframework.tutoring.model.Tutee">
         SELECT t.*, s.name AS school
         FROM tutee t INNER JOIN school s ON t.school_idx = s.idx
         ORDER BY RAND()
         LIMIT 0,1;
     </select>
 
-    <select id="isApplying">
+    <select id="isApplying" resultType="java.lang.Integer">
         SELECT EXISTS(SELECT 1 FROM apply WHERE status = 0 AND tutee_idx = #{matchingApply.tuteeIdx} AND tutor_idx = #{matchingApply.tutorIdx});
     </select>
 
     <insert id="apply">
-        INSERT INTO apply(tutee_idx, tutor_idx, matching_time, type, status)
+        INSERT INTO apply(tutee_idx, tutor_idx, apply_time, type, status)
         VALUES(#{matchingApply.tuteeIdx}, #{matchingApply.tutorIdx}, NOW(), 2, 0);
     </insert>
 
     <update id="permit">
-        UPDATE apply SET status = 1 WHERE idx = #{applyIdx} AND type = 1;
+        UPDATE apply SET status = 1 WHERE idx = #{applyIdx} AND status = 0 AND type = 1;
     </update>
 
     <insert id="match">
         INSERT INTO matching(tutor_idx, tutee_idx, matching_time)
-            SELECT tutor_idx, tutee_idx, now() FROM apply WHERE idx = #{applyIdx} AND status = 0 AND type = 1;
+            SELECT tutor_idx, tutee_idx, now() FROM apply WHERE idx = #{applyIdx} AND status = 1 AND type = 1;
     </insert>
 
     <update id="refuse">
-        UPDATE apply SET status = -1 WHERE idx = #{applyIdx} AND type = 1;
+        UPDATE apply SET status = -1 WHERE idx = #{applyIdx} AND status = 0 AND type = 1;
     </update>
 </mapper>

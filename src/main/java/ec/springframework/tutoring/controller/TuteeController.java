@@ -4,13 +4,11 @@ import ec.springframework.tutoring.model.*;
 import ec.springframework.tutoring.model.apply.MatchingApply;
 import ec.springframework.tutoring.model.request.*;
 import ec.springframework.tutoring.service.TuteeService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,26 +25,26 @@ public class TuteeController {
     }
 
     @RequestMapping(value = "/signup", method = RequestMethod.POST)
-    @ApiOperation(position = 1, value = "회원가입", notes = "", tags = "튜티")
-    public ApiMessage signUp(TuteeSignUpReq signUpReq) {
+    @ApiOperation(value = "회원가입", notes = "", tags = "튜티")
+    public ApiMessage signUp(@RequestBody TuteeSignUpReq signUpReq) {
         return tuteeService.signUp(signUpReq);
     }
 
     @RequestMapping(value = "/check/duplicate/{email}", method = RequestMethod.GET)
-    @ApiOperation(position = 1, value = "튜티 - 이메일 중복 확인", notes = "code: 1(중복 메일 없음), -1(중복 메일 존재)", tags = "튜티")
+    @ApiOperation(value = "튜티 - 이메일 중복 확인", notes = "code: 1(중복 메일 없음), -1(중복 메일 존재)", tags = "튜티")
     public ApiMessage checkDuplicateEmail(@PathVariable("email") String email) {
         return tuteeService.checkDuplicateEmail(email);
     }
 
     @RequestMapping(value = "/school/list", method = RequestMethod.GET)
-    @ApiOperation(position = 1, value = "중고등학교 리스트", notes = "", tags = "튜티")
+    @ApiOperation(value = "중고등학교 리스트", notes = "", tags = "튜티")
     public List<School> getSchoolList() {
         return tuteeService.getSchoolList();
     }
 
     @RequestMapping(value = "/signin", method = RequestMethod.POST)
-    @ApiOperation(position = 2, value = "로그인", notes = "", tags = "튜티")
-    public Tutee signIn(TuteeSignInReq signInReq) {
+    @ApiOperation(value = "로그인", notes = "", tags = "튜티")
+    public Tutee signIn(@RequestBody TuteeSignInReq signInReq) {
         return tuteeService.signIn(signInReq);
     }
 
@@ -58,19 +56,19 @@ public class TuteeController {
 //    }
 
     @RequestMapping(value = "/info/{tuteeIdx}", method = RequestMethod.GET)
-    @ApiOperation(position = 4, value = "학생 정보 조회", notes = "", tags = "튜티")
+    @ApiOperation(value = "학생 정보 조회", notes = "", tags = "튜티")
     public Tutee getInfo(@PathVariable("tuteeIdx") int tuteeIdx) {
         return tuteeService.getInfo(tuteeIdx);
     }
 
     @RequestMapping(value = "/tutor/list", method = RequestMethod.GET)
-    @ApiOperation(position = 5, value = "튜터 리스트 조회", notes = "", tags = "튜티")
+    @ApiOperation(value = "튜터 리스트 조회", notes = "", tags = "튜티")
     public List<Tutor> getTutorList() {
         return tuteeService.getTutorList();
     }
 
     @RequestMapping(value = "/my/tutor/list/{tuteeIdx}", method = RequestMethod.GET)
-    @ApiOperation(position = 6, value = "내 튜터 리스트 조회", notes = "", tags = "튜티")
+    @ApiOperation(value = "내 튜터 리스트 조회", notes = "", tags = "튜티")
     public List<Tutor> getMyTutorList(@PathVariable("tuteeIdx") int tuteeIdx) {
         return tuteeService.getMyTutorList(tuteeIdx);
     }
@@ -89,7 +87,7 @@ public class TuteeController {
 
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     @ApiOperation(position = 7, value = "신청하기", notes = "", tags = "튜티")
-    public ApiMessage apply(ApplyReq apply) {
+    public ApiMessage apply(@RequestBody ApplyReq apply) {
         return tuteeService.apply(MatchingApply.applyTuteeToTutor(apply));
     }
 

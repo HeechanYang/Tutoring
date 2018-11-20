@@ -35,6 +35,7 @@ public interface TuteeMapper {
 
     public Tutor getRandomMatchedTutor();
 
+    public int isApplying(@Param("matchingApply") MatchingApply matchingApply);
     public void apply(@Param("matchingApply") MatchingApply matchingApply) throws SQLException;
 
     public void permit(@Param("applyIdx") int applyIdx) throws SQLException;

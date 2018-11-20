@@ -55,25 +55,25 @@
         LIMIT 0,1;
     </select>
 
-    <select id="isApplying">
+    <select id="isApplying" resultType="java.lang.Integer">
         SELECT EXISTS(SELECT 1 FROM apply WHERE status = 0 AND tutee_idx = #{matchingApply.tuteeIdx} AND tutor_idx = #{matchingApply.tutorIdx});
     </select>
 
     <insert id="apply">
-        INSERT INTO apply(tutee_idx, tutor_idx, matching_time, type, status)
+        INSERT INTO apply(tutee_idx, tutor_idx, apply_time, type, status)
         VALUES(#{matchingApply.tuteeIdx}, #{matchingApply.tutorIdx}, NOW(), 1, 0);
     </insert>
 
     <update id="permit">
-        UPDATE apply SET status = 1 WHERE idx = #{applyIdx} AND type = 2;
+        UPDATE apply SET status = 1 WHERE idx = #{applyIdx} AND status = 0 AND type = 2;
     </update>
 
     <insert id="match">
         INSERT INTO matching(tutor_idx, tutee_idx, matching_time)
-            SELECT tutor_idx, tutee_idx, now() FROM apply WHERE idx = #{applyIdx} AND status = 0 AND type = 2;
+            SELECT tutor_idx, tutee_idx, now() FROM apply WHERE idx = #{applyIdx} AND status = 1 AND type = 2;
     </insert>
 
     <update id="refuse">
-        UPDATE apply SET status = -1 WHERE idx = #{applyIdx} AND type = 2;
+        UPDATE apply SET status = -1 WHERE idx = #{applyIdx} AND status = 0 AND type = 2;
     </update>
 </mapper>

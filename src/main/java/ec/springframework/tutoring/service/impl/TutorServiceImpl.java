@@ -81,8 +81,11 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
     @Override
     public ApiMessage apply(MatchingApply apply) {
         try{
-            tutorMapper.apply(apply);
-            return new ApiMessage(ApiMessage.SUCCESS);
+            if(tutorMapper.isApplying(apply)==0){
+                tutorMapper.apply(apply);
+                return new ApiMessage(ApiMessage.SUCCESS);
+            }
+            return new ApiMessage(ApiMessage.FAIL);
         }catch (SQLException e){
             return new ApiMessage(ApiMessage.FAIL);
         }

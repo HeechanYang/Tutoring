@@ -79,8 +79,11 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
     @Override
     public ApiMessage apply(MatchingApply apply) {
         try{
-            tuteeMapper.apply(apply);
-            return new ApiMessage(ApiMessage.SUCCESS);
+            if(tuteeMapper.isApplying(apply)==0){
+                tuteeMapper.apply(apply);
+                return new ApiMessage(ApiMessage.SUCCESS);
+            }
+            return new ApiMessage(ApiMessage.FAIL);
         }catch (SQLException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
