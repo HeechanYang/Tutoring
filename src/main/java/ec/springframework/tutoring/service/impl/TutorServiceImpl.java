@@ -10,10 +10,10 @@ import ec.springframework.tutoring.model.request.TutorSignUpReq;
 import ec.springframework.tutoring.model.request.TutorSigninReq;
 import ec.springframework.tutoring.service.CommonDao;
 import ec.springframework.tutoring.service.TutorService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -36,7 +36,7 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
         try{
             tutorMapper.signUp(signUpReq);
             return new ApiMessage(ApiMessage.SUCCESS);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -48,7 +48,12 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
 
     @Override
     public Tutor signIn(TutorSigninReq signInReq) {
-        return tutorMapper.signIn(signInReq);
+        Tutor tutor = tutorMapper.signIn(signInReq);
+        if (tutor!=null){
+            return tutor;
+        }else{
+            return new Tutor();
+        }
     }
 
     @Override
@@ -58,8 +63,6 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
 
     @Override
     public List<Tutee> getTuteeList() {
-
-
         return tutorMapper.getTuteeList();
     }
 
@@ -86,7 +89,7 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
                 return new ApiMessage(ApiMessage.SUCCESS);
             }
             return new ApiMessage(ApiMessage.FAIL);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -98,7 +101,7 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
             tutorMapper.permit(applyIdx);
             tutorMapper.match(applyIdx);
             return new ApiMessage(ApiMessage.SUCCESS);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -108,7 +111,7 @@ public class TutorServiceImpl  extends CommonDao implements TutorService{
         try{
             tutorMapper.refuse(applyIdx);
             return new ApiMessage(ApiMessage.SUCCESS);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }

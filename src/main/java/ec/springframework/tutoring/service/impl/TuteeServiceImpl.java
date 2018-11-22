@@ -10,10 +10,10 @@ import ec.springframework.tutoring.model.request.TuteeSignInReq;
 import ec.springframework.tutoring.model.request.TuteeSignUpReq;
 import ec.springframework.tutoring.service.CommonDao;
 import ec.springframework.tutoring.service.TuteeService;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -36,7 +36,7 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
         try {
             tuteeMapper.signUp(signUpReq);
             return new ApiMessage(ApiMessage.SUCCESS);
-        } catch (SQLException e) {
+        } catch (DataAccessException e) {
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -48,7 +48,12 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
 
     @Override
     public Tutee signIn(TuteeSignInReq signInReq) {
-        return tuteeMapper.signIn(signInReq);
+        Tutee tutee = tuteeMapper.signIn(signInReq);
+        if (tutee!=null){
+            return tutee;
+        }else{
+            return new Tutee();
+        }
     }
 
     @Override
@@ -84,7 +89,7 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
                 return new ApiMessage(ApiMessage.SUCCESS);
             }
             return new ApiMessage(ApiMessage.FAIL);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -96,7 +101,7 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
             tuteeMapper.permit(applyIdx);
             tuteeMapper.match(applyIdx);
             return new ApiMessage(ApiMessage.SUCCESS);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }
@@ -106,7 +111,7 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
         try{
             tuteeMapper.refuse(applyIdx);
             return new ApiMessage(ApiMessage.SUCCESS);
-        }catch (SQLException e){
+        }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
     }

@@ -9,6 +9,7 @@ import ec.springframework.tutoring.model.request.TutorSignUpReq;
 import ec.springframework.tutoring.model.request.TutorSigninReq;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Component;
 
 import java.sql.SQLException;
@@ -19,7 +20,7 @@ import java.util.List;
 public interface TutorMapper {
     public int checkDuplicateEmail(String email);
 
-    public void signUp(@Param("signUpReq") TutorSignUpReq signUpReq) throws SQLException;
+    public void signUp(@Param("signUpReq") TutorSignUpReq signUpReq) throws DataAccessException;
 
     public List<School> getSchoolList();
 
@@ -36,10 +37,10 @@ public interface TutorMapper {
     public Tutee getRandomMatchedTutee();
 
     public int isApplying(@Param("matchingApply") MatchingApply matchingApply);
-    public void apply(@Param("matchingApply") MatchingApply matchingApply) throws SQLException;
+    public void apply(@Param("matchingApply") MatchingApply matchingApply) throws DataAccessException;
 
-    public void permit(@Param("applyIdx") int applyIdx) throws SQLException;
-    public void match(@Param("applyIdx") int applyIdx) throws SQLException;
+    public void permit(@Param("applyIdx") int applyIdx) throws DataAccessException;
+    public void match(@Param("applyIdx") int applyIdx) throws DataAccessException;
 
-    public void refuse(@Param("applyIdx") int applyIdx) throws SQLException;
+    public void refuse(@Param("applyIdx") int applyIdx) throws DataAccessException;
 }

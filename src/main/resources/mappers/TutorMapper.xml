@@ -30,7 +30,7 @@
 
     <select id="getInfo" resultType="ec.springframework.tutoring.model.Tutor">
         SELECT t.*, s.name AS school FROM tutor t INNER JOIN school s ON t.school_idx = s.idx
-        WHERE idx = #{tutorIdx};
+        WHERE t.idx = #{tutorIdx};
     </select>
 
     <select id="getMyTuteeList" resultType="ec.springframework.tutoring.model.Tutee">
@@ -42,7 +42,7 @@
 
     <select id="getTuteeInfo" resultType="ec.springframework.tutoring.model.Tutee">
         SELECT t.*, s.name AS school FROM tutee t INNER JOIN school s ON t.school_idx = s.idx
-        WHERE idx = #{tuteeIdx};
+        WHERE t.idx = #{tuteeIdx};
     </select>
 
     <select id="getRandomMatchedTutee" resultType="ec.springframework.tutoring.model.Tutee">
