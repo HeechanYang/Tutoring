@@ -1,9 +1,6 @@
 package ec.springframework.tutoring.service;
 
-import ec.springframework.tutoring.model.ApiMessage;
-import ec.springframework.tutoring.model.School;
-import ec.springframework.tutoring.model.Tutee;
-import ec.springframework.tutoring.model.Tutor;
+import ec.springframework.tutoring.model.*;
 import ec.springframework.tutoring.model.apply.MatchingApply;
 import ec.springframework.tutoring.model.request.PermitReq;
 import ec.springframework.tutoring.model.request.TutorSignUpReq;
@@ -33,6 +30,12 @@ public interface TutorService {
 
     // 신청하기
     public ApiMessage apply(MatchingApply apply);
+
+    // 받은 신청 리스트
+    public List<ApplyWithTutorInfo> getReceivedApplyList(int tuteeIdx);
+
+    // 보낸 신청 리스트
+    public List<ApplyWithTutorInfo> getSentApplyList(int tuteeIdx);
 
     //수락하기
     public ApiMessage permit(int applyIdx);

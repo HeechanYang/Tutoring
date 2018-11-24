@@ -1,9 +1,6 @@
 package ec.springframework.tutoring.controller;
 
-import ec.springframework.tutoring.model.ApiMessage;
-import ec.springframework.tutoring.model.School;
-import ec.springframework.tutoring.model.Tutee;
-import ec.springframework.tutoring.model.Tutor;
+import ec.springframework.tutoring.model.*;
 import ec.springframework.tutoring.model.apply.MatchingApply;
 import ec.springframework.tutoring.model.request.*;
 import ec.springframework.tutoring.service.TutorService;
@@ -94,6 +91,18 @@ public class TutorController {
     @ApiOperation(position = 10, value = "신청하기", notes = "", tags = "튜터")
     public ApiMessage apply(@RequestBody ApplyReq apply) {
         return tutorService.apply(MatchingApply.applyTutorToTutee(apply));
+    }
+
+    @RequestMapping(value = "/my/apply/sent/{tutorIdx}", method = RequestMethod.GET)
+    @ApiOperation(value = "내가 보낸 신청리스트", notes = "", tags = "튜터")
+    public List<ApplyWithTutorInfo> getSentApplyList(@PathVariable("tutorIdx")int tutorIdx) {
+        return tutorService.getSentApplyList(tutorIdx);
+    }
+
+    @RequestMapping(value = "/my/apply/received/{tutorIdx}", method = RequestMethod.GET)
+    @ApiOperation(value = "내가 받은 신청리스트", notes = "", tags = "튜터")
+    public List<ApplyWithTutorInfo> getReceivedApplyList(@PathVariable("tutorIdx")int tutorIdx) {
+        return tutorService.getReceivedApplyList(tutorIdx);
     }
 
     @RequestMapping(value = "/permit/{applyIdx}", method = RequestMethod.PUT)

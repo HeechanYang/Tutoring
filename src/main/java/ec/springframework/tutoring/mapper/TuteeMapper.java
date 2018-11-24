@@ -1,5 +1,6 @@
 package ec.springframework.tutoring.mapper;
 
+import ec.springframework.tutoring.model.ApplyWithTutorInfo;
 import ec.springframework.tutoring.model.School;
 import ec.springframework.tutoring.model.Tutee;
 import ec.springframework.tutoring.model.Tutor;
@@ -37,6 +38,9 @@ public interface TuteeMapper {
 
     public int isApplying(@Param("matchingApply") MatchingApply matchingApply);
     public void apply(@Param("matchingApply") MatchingApply matchingApply) throws DataAccessException;
+
+    public List<ApplyWithTutorInfo> getReceivedApplyList(int tuteeIdx);
+    public List<ApplyWithTutorInfo> getSentApplyList(int tuteeIdx);
 
     public void permit(@Param("applyIdx") int applyIdx) throws DataAccessException;
     public void match(@Param("applyIdx") int applyIdx) throws DataAccessException;

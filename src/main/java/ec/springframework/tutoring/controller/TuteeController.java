@@ -4,7 +4,6 @@ import ec.springframework.tutoring.model.*;
 import ec.springframework.tutoring.model.apply.MatchingApply;
 import ec.springframework.tutoring.model.request.*;
 import ec.springframework.tutoring.service.TuteeService;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -74,31 +73,43 @@ public class TuteeController {
     }
 
     @RequestMapping(value = "/tutor/{tutorIdx}", method = RequestMethod.GET)
-    @ApiOperation(position = 7, value = "튜터 정보 조회", notes = "", tags = "튜티")
+    @ApiOperation(value = "튜터 정보 조회", notes = "", tags = "튜티")
     public Tutor getTutorInfo(@PathVariable("tutorIdx") int tutorIdx) {
         return tuteeService.getTutorInfo(tutorIdx);
     }
 
     @RequestMapping(value = "/randommatching", method = RequestMethod.GET)
-    @ApiOperation(position = 7, value = "랜덤 매칭된 튜터 정보 조회", notes = "", tags = "튜티")
+    @ApiOperation(value = "랜덤 매칭된 튜터 정보 조회", notes = "", tags = "튜티")
     public Tutor getRandomMatchedTutor() {
         return tuteeService.getRandomMatchedTutor();
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    @ApiOperation(position = 7, value = "신청하기", notes = "", tags = "튜티")
+    @ApiOperation(value = "신청하기", notes = "", tags = "튜티")
     public ApiMessage apply(@RequestBody ApplyReq apply) {
         return tuteeService.apply(MatchingApply.applyTuteeToTutor(apply));
     }
 
+    @RequestMapping(value = "/my/apply/sent/{tuteeIdx}", method = RequestMethod.GET)
+    @ApiOperation(value = "내가 보낸 신청리스트", notes = "", tags = "튜티")
+    public List<ApplyWithTutorInfo> getSentApplyList(@PathVariable("tuteeIdx")int tuteeIdx) {
+        return tuteeService.getSentApplyList(tuteeIdx);
+    }
+
+    @RequestMapping(value = "/my/apply/received/{tuteeIdx}", method = RequestMethod.GET)
+    @ApiOperation(value = "내가 받은 신청리스트", notes = "", tags = "튜티")
+    public List<ApplyWithTutorInfo> getReceivedApplyList(@PathVariable("tuteeIdx")int tuteeIdx) {
+        return tuteeService.getReceivedApplyList(tuteeIdx);
+    }
+
     @RequestMapping(value = "/permit/{applyIdx}", method = RequestMethod.PUT)
-    @ApiOperation(position = 7, value = "수락하기", notes = "", tags = "튜티")
+    @ApiOperation(value = "수락하기", notes = "", tags = "튜티")
     public ApiMessage permit(@PathVariable("applyIdx") int applyIdx) {
         return tuteeService.permit(applyIdx);
     }
 
     @RequestMapping(value = "/refuse/{applyIdx}", method = RequestMethod.PUT)
-    @ApiOperation(position = 7, value = "거절하기", notes = "", tags = "튜티")
+    @ApiOperation(value = "거절하기", notes = "", tags = "튜티")
     public ApiMessage refuse(@PathVariable("applyIdx") int applyIdx) {
         return tuteeService.refuse(applyIdx);
     }

@@ -1,10 +1,7 @@
 package ec.springframework.tutoring.service.impl;
 
 import ec.springframework.tutoring.mapper.TuteeMapper;
-import ec.springframework.tutoring.model.ApiMessage;
-import ec.springframework.tutoring.model.School;
-import ec.springframework.tutoring.model.Tutee;
-import ec.springframework.tutoring.model.Tutor;
+import ec.springframework.tutoring.model.*;
 import ec.springframework.tutoring.model.apply.MatchingApply;
 import ec.springframework.tutoring.model.request.TuteeSignInReq;
 import ec.springframework.tutoring.model.request.TuteeSignUpReq;
@@ -92,6 +89,16 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
         }catch (DataAccessException e){
             return new ApiMessage(ApiMessage.FAIL);
         }
+    }
+
+    @Override
+    public List<ApplyWithTutorInfo> getReceivedApplyList(int tuteeIdx) {
+        return tuteeMapper.getReceivedApplyList(tuteeIdx);
+    }
+
+    @Override
+    public List<ApplyWithTutorInfo> getSentApplyList(int tuteeIdx) {
+        return tuteeMapper.getSentApplyList(tuteeIdx);
     }
 
     @Override

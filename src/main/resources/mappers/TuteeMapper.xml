@@ -64,6 +64,22 @@
         VALUES(#{matchingApply.tuteeIdx}, #{matchingApply.tutorIdx}, NOW(), 1, 0);
     </insert>
 
+    <select id="getReceivedApplyList" resultType="ec.springframework.tutoring.model.ApplyWithTutorInfo">
+        SELECT t.*, a.status, a.apply_time, s.name AS school
+        FROM apply a INNER JOIN tutor t ON a.tutor_idx = t.idx
+            INNER JOIN school s ON t.school_idx = s.idx
+        WHERE a.tutee_idx = #{tuteeIdx} AND a.type = 2
+        ORDER BY a.apply_time DESC;
+    </select>
+
+    <select id="getSentApplyList" resultType="ec.springframework.tutoring.model.ApplyWithTutorInfo">
+        SELECT t.*, a.status, a.apply_time, s.name AS school
+        FROM apply a INNER JOIN tutor t ON a.tutor_idx = t.idx
+            INNER JOIN school s ON t.school_idx = s.idx
+        WHERE a.tutee_idx = #{tuteeIdx} AND a.type = 1
+        ORDER BY a.apply_time DESC;
+    </select>
+
     <update id="permit">
         UPDATE apply SET status = 1 WHERE idx = #{applyIdx} AND status = 0 AND type = 2;
     </update>
