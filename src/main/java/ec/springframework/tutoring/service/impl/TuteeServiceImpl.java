@@ -74,8 +74,8 @@ public class TuteeServiceImpl extends CommonDao implements TuteeService {
     }
 
     @Override
-    public Tutor getRandomMatchedTutor() {
-        return tuteeMapper.getRandomMatchedTutor();
+    public Tutor getRandomMatchedTutor(int tuteeIdx) {
+        return tuteeMapper.getRandomMatchedTutor(tuteeIdx);
     }
 
     @Override

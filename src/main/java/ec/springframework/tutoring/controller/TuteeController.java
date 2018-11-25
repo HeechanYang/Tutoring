@@ -78,10 +78,10 @@ public class TuteeController {
         return tuteeService.getTutorInfo(tutorIdx);
     }
 
-    @RequestMapping(value = "/randommatching", method = RequestMethod.GET)
+    @RequestMapping(value = "/randommatching/{tuteeIdx}", method = RequestMethod.GET)
     @ApiOperation(value = "랜덤 매칭된 튜터 정보 조회", notes = "", tags = "튜티")
-    public Tutor getRandomMatchedTutor() {
-        return tuteeService.getRandomMatchedTutor();
+    public Tutor getRandomMatchedTutor(@PathVariable("tuteeIdx") int tuteeIdx) {
+        return tuteeService.getRandomMatchedTutor(tuteeIdx);
     }
 
     @RequestMapping(value = "/apply", method = RequestMethod.POST)

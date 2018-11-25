@@ -48,6 +48,8 @@
     <select id="getRandomMatchedTutee" resultType="ec.springframework.tutoring.model.Tutee">
         SELECT t.*, s.name AS school
         FROM tutee t INNER JOIN school s ON t.school_idx = s.idx
+        WHERE t.idx NOT IN (SELECT tutee_idx FROM apply WHERE status = 0 AND tutor_idx = #{tutorIdx})
+              AND t.idx NOT IN (SELECT tutee_idx FROM matching WHERE tutor_idx = #{tutorIdx})
         ORDER BY RAND()
         LIMIT 0,1;
     </select>

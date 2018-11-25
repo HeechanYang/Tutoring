@@ -34,7 +34,7 @@ public interface TuteeMapper {
 
     public Tutor getTutorInfo(int tutorIdx);
 
-    public Tutor getRandomMatchedTutor();
+    public Tutor getRandomMatchedTutor(@Param("tuteeIdx") int tuteeIdx);
 
     public int isApplying(@Param("matchingApply") MatchingApply matchingApply);
     public void apply(@Param("matchingApply") MatchingApply matchingApply) throws DataAccessException;

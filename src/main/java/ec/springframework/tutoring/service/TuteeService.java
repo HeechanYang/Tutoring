@@ -25,7 +25,7 @@ public interface TuteeService {
     public Tutor getTutorInfo(int tutorIdx);
 
     // 랜덤 매칭 된 튜터 정보 가져오기
-    public Tutor getRandomMatchedTutor();
+    public Tutor getRandomMatchedTutor(int tuteeIdx);
 
     // 신청하기
     public ApiMessage apply(MatchingApply apply);
